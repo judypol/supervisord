@@ -1,0 +1,6 @@
+supervisord:
+   api:
+      - {name: '服务器1',host: 'http://192.168.68.50:9001/RPC2',user: shcem,password: shcem_supervisor }
+      - {name: '服务器2',host: '192.168.68.51:9001',user: shcem,password: shcem_supervisor }
+server:
+  port: 8081
