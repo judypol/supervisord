@@ -1,6 +1,15 @@
 supervisord:
    api:
-      - {name: '服务器1',host: 'http://192.168.68.50:9001/RPC2',user: shcem,password: shcem_supervisor }
-      - {name: '服务器2',host: '192.168.68.51:9001',user: shcem,password: shcem_supervisor }
+      - {name: 'UAT中央代理68.50',host: 'http://192.168.68.50:9001/RPC2',user: shcem,password: shcem_supervisor }
+      - {name: 'UAT后台服务67.20',host: 'http://192.168.67.20:9001/RPC2',user: shcem,password: shcem_supervisor }
+      - {name: 'UAT后台画面68.21',host: 'http://192.168.68.21:9001/RPC2',user: user,password: 123 }
+      - {name: 'UAT资金68.33',host: 'http://192.168.68.33:9001/RPC2',user: shcem,password: shcem_supervisor }
+      - {name: 'UAT资金68.40',host: 'http://192.168.68.40:9001/RPC2',user: shcem,password: shcem_supervisor }
+      - {name: 'mltp-uat后端服务67.24',host: 'http://192.168.67.24:9001/RPC2',user: shcem,password: shcem_supervisor }
+      - {name: 'mltp-uat前端服务67.34',host: 'http://192.168.67.34:9001/RPC2',user: shcem,password: shcem_supervisor }
+      - {name: 'mltp-uat后端画面68.24',host: 'http://192.168.68.24:9001/RPC2',user: shcem,password: shcem_supervisor }
+      - {name: 'mltp-uat前端画面68.34',host: 'http://192.168.68.34:9001/RPC2',user: shcem,password: shcem_supervisor }
+      - {name: 'mltp-uat中央代理68.54',host: 'http://192.168.68.54:9001/RPC2',user: shcem,password: shcem_supervisor }
+      - {name: 'uat消息推送中心68.55',host: 'http://192.168.68.55:9001/RPC2',user: shcem,password: shcem_supervisor }
 server:
   port: 8081

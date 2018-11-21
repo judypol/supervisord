@@ -42,7 +42,11 @@ public class SupervisorController {
     public ResponseMessage getAllProcess(@RequestParam("serverName") String serverName) throws Exception {
         Supervisord supervisord =connect(serverName);
         Object[] objects =supervisord.getAllProcessInfo();
-        List<ProcessModel> models=convert2Entity(objects);
+        List<ProcessModel> models=new ArrayList<>();
+        if(objects!=null){
+            models=convert2Entity(objects);
+        }
+
         return new ResponseMessage(models);
     }
 

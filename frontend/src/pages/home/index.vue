@@ -2,8 +2,8 @@
     <div>
         <div class="search">
             <el-form :inline="true" :model="form" class="demo-form-inline">
-                <el-form-item label="活动区域">
-                    <el-select v-model="form.serverName" placeholder="服务器名">
+                <el-form-item label="服务器">
+                    <el-select v-model="form.serverName" placeholder="服务器名" filterable>
                         <el-option v-for="item in servers" :key="item" :label="item" :value="item"></el-option>
                     </el-select>
                 </el-form-item>
@@ -143,12 +143,17 @@ export default {
     },
     methods:{
         onSearch(){
-            this.$axios.get('supervisor/allProcess?serverName='+this.form.serverName).then((res)=>{
+            var that=this;
+            that.$axios.get('supervisor/allProcess?serverName='+this.form.serverName).then((res)=>{
                 if(res.success==true){
-                    this.processData=res.data
+                    that.processData=res.data
                 }else{
-                    this.$message.error(res.msg);
+                    that.$message.error(res.msg);
                 }
+            }).catch(err=>{
+                that.processData=[];
+                that.$message.error(err);
+                //console.log(err);
             })
         },
         getServers(){
@@ -167,12 +172,15 @@ export default {
         },
         onStop(row){
             var url='supervisor/stop?process='+row.name+'&serverName='+this.form.serverName;
-            this.$axios.get(url)
+            this.$confirm('确定操作吗？').then(()=>{
+                this.$axios.get(url)
                 .then(res=>{
                     if(res.success){
                         row.stateName="STOPPED"
                     }
                 });
+            });
+            
         },
         onStart(row){
             var url='supervisor/start?process='+row.name+'&serverName='+this.form.serverName;
@@ -185,7 +193,8 @@ export default {
         },
         onReStart(row){
             var url='supervisor/reStart?process='+row.name+'&serverName='+this.form.serverName;
-            this.$axios.get(url)
+            this.$confirm('确定操作吗？').then(()=>{
+                this.$axios.get(url)
                 .then(res=>{
                     if(res.success){
                         row.stateName="RUNNING"
@@ -193,13 +202,18 @@ export default {
                         row.stateName='STOPPED';
                     }
                 });
+            });
+            
         },
         onStopAll(){
             var url='supervisor/stopAll?serverName='+this.form.serverName;
-            this.$axios.get(url)
+            this.$confirm('确定操作吗？').then(()=>{
+                this.$axios.get(url)
                 .then(res=>{
                     this.onSearch();
                 });
+            })
+            
         },
         onStartAll(){
             var url='supervisor/startAll?serverName='+this.form.serverName;
@@ -210,10 +224,12 @@ export default {
         },
         onRestartAll(){
             var url='supervisor/reStartAll?serverName='+this.form.serverName;
-            this.$axios.get(url)
+            this.$confirm('确定操作吗？').then(()=>{
+                this.$axios.get(url)
                 .then(res=>{
                     this.onSearch();
                 });
+            });
         },
         rowClass(row){
             if(row.rowIndex%2==0){
